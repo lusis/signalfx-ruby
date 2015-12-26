@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require_relative 'lib/signalfx/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "signalfx"
+  spec.name          = "lusis-signalfx"
   spec.version       = Version::VERSION
   spec.authors       = ["SignalFx, Inc"]
   spec.email         = ["info@signalfx.com"]

@@ -36,13 +36,11 @@ class SignalFxClient
         if request != nil
           json_resp = JSON.parse(request.body)
           @aws_unique_id = json_resp['instanceId']+'_'+json_resp['region']+'_'+json_resp['accountId']
-          puts("AWS Unique ID loaded: #{@aws_unique_id}")
         else
           puts('Failed to retrieve AWS unique ID.')
         end
       }
     end
-    puts('initialize end')
   end
 
   #Send the given metrics to SignalFx synchronously.
@@ -127,8 +125,6 @@ class SignalFxClient
     if @aws_unique_id
       data[:dimensions][SignalFX::Config::AWS_UNIQUE_ID_DIMENSION_NAME] = @aws_unique_id
     end
-
-    puts(data)
 
     post(data.to_json, @api_endpoint, API_ENDPOINT_SUFFIX, SignalFX::Config::JSON_HEADER_CONTENT_TYPE)
   end
