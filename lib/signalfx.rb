@@ -21,9 +21,9 @@ module SignalFx
   # @param timeout - number
   # @param batch_size - number
   # @param user_agents - array
-  def self.new(api_token, enable_aws_unique_id: false, ingest_endpoint: Config::DEFAULT_INGEST_ENDPOINT,
-      api_endpoint: Config::DEFAULT_API_ENDPOINT, timeout: Config::DEFAULT_TIMEOUT,
-      batch_size: Config::DEFAULT_BATCH_SIZE, user_agents: [])
+  def self.new(api_token, enable_aws_unique_id: false, ingest_endpoint: SignalFX::Config::DEFAULT_INGEST_ENDPOINT,
+      api_endpoint: SignalFX::Config::DEFAULT_API_ENDPOINT, timeout: SignalFX::Config::DEFAULT_TIMEOUT,
+      batch_size: SignalFX::Config::DEFAULT_BATCH_SIZE, user_agents: [])
     begin
       require_relative './proto/signal_fx_protocol_buffers.pb'
       ProtoBufSignalFx.new(api_token, enable_aws_unique_id: enable_aws_unique_id, ingest_endpoint: ingest_endpoint,

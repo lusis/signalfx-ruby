@@ -15,9 +15,9 @@ class SignalFxClient
   INGEST_ENDPOINT_SUFFIX = 'v2/datapoint'
   API_ENDPOINT_SUFFIX = 'v1/event'
 
-  def initialize(api_token, enable_aws_unique_id: false, ingest_endpoint: Config::DEFAULT_INGEST_ENDPOINT,
-                 api_endpoint: Config::DEFAULT_API_ENDPOINT, timeout: Config::DEFAULT_TIMEOUT,
-                 batch_size: Config::DEFAULT_BATCH_SIZE, user_agents: [])
+  def initialize(api_token, enable_aws_unique_id: false, ingest_endpoint: SignalFX::Config::DEFAULT_INGEST_ENDPOINT,
+                 api_endpoint: SignalFX::Config::DEFAULT_API_ENDPOINT, timeout: SignalFX::Config::DEFAULT_TIMEOUT,
+                 batch_size: SignalFX::Config::DEFAULT_BATCH_SIZE, user_agents: [])
 
     @api_token = api_token
     @ingest_endpoint = ingest_endpoint
@@ -125,12 +125,12 @@ class SignalFxClient
     }
 
     if @aws_unique_id
-      data[:dimensions][Config::AWS_UNIQUE_ID_DIMENSION_NAME] = @aws_unique_id
+      data[:dimensions][SignalFX::Config::AWS_UNIQUE_ID_DIMENSION_NAME] = @aws_unique_id
     end
 
     puts(data)
 
-    post(data.to_json, @api_endpoint, API_ENDPOINT_SUFFIX, Config::JSON_HEADER_CONTENT_TYPE)
+    post(data.to_json, @api_endpoint, API_ENDPOINT_SUFFIX, SignalFX::Config::JSON_HEADER_CONTENT_TYPE)
   end
 
   protected
@@ -193,7 +193,7 @@ class SignalFxClient
 
   def retrieve_aws_unique_id(&block)
     begin
-      RestClient::Request.execute(method: :get, url: Config::AWS_UNIQUE_ID_URL,
+      RestClient::Request.execute(method: :get, url: SignalFX::Config::AWS_UNIQUE_ID_URL,
                                   timeout: 1) { |response|
         case response.code
           when 200
@@ -216,7 +216,7 @@ class SignalFxClient
           if datapoint[:dimensions] == nil
             datapoint[:dimensions] = []
           end
-          datapoint[:dimensions] << {:key => Config::AWS_UNIQUE_ID_DIMENSION_NAME, :value => @aws_unique_id}
+          datapoint[:dimensions] << {:key => SignalFX::Config::AWS_UNIQUE_ID_DIMENSION_NAME, :value => @aws_unique_id}
         end
 
         add_to_queue(metric_type, datapoint)
